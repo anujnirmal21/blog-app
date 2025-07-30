@@ -1,4 +1,11 @@
 import { Router } from "express";
+import {
+  getAllBlogs,
+  handleDeleteBlog,
+  handleCreateBlog,
+  handleUpdateBlog,
+  getBlog,
+} from "../controllers/blog.controller.js";
 
 const blogRoutes = Router();
 

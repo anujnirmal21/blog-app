@@ -16,13 +16,13 @@ app.use(
   })
 );
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
+app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
   })
 );
-app.use(cookieParser());
 
 //middleware routes
 app.use("/api/v1/auth", authRoutes);
