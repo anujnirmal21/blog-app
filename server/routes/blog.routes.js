@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { protectRoute } from "./../middlewares/auth.middleware.js";
 import {
   getAllBlogs,
   handleDeleteBlog,
@@ -9,10 +10,10 @@ import {
 
 const blogRoutes = Router();
 
-blogRoutes.get("/", getAllBlogs);
-blogRoutes.get("/:id", getBlog);
-blogRoutes.post("/", handleCreateBlog);
-blogRoutes.put("/:id", handleUpdateBlog);
-blogRoutes.delete("/:id", handleDeleteBlog);
+blogRoutes.get("/", protectRoute, getAllBlogs);
+blogRoutes.get("/:id", protectRoute, getBlog);
+blogRoutes.post("/", protectRoute, handleCreateBlog);
+blogRoutes.put("/:id", protectRoute, handleUpdateBlog);
+blogRoutes.delete("/:id", protectRoute, handleDeleteBlog);
 
 export default blogRoutes;
