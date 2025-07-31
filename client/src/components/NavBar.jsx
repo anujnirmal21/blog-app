@@ -30,8 +30,8 @@ function NavBar() {
         </h2>
       </div>
       <div className="flex gap-4">
-        <ButtonOne text={"Sign up"} />
-        <ButtonTwo text={"Log in"} />
+        <ButtonOne text={"Sign up"} onClick={() => navigate("/signup")} />
+        <ButtonTwo text={"Log in"} onClick={() => navigate("/login")} />
       </div>
     </header>
   );
