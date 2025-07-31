@@ -1,10 +1,17 @@
+import { useAuthStore } from "../store/useAuthStore";
 import ButtonOne from "./buttons/ButtonOne";
 import ButtonTwo from "./buttons/ButtonTwo";
+import { useNavigate } from "react-router-dom";
 
 function NavBar() {
+  const navigate = useNavigate();
+  const { authUser } = useAuthStore();
   return (
     <header className="w-full flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#ededed] px-10 py-3">
-      <div className="flex items-center gap-4 text-[#141414]">
+      <div
+        className="flex items-center gap-4 text-[#141414] cursor-pointer"
+        onClick={() => navigate(authUser ? "/home" : "/")}
+      >
         <div className="size-4">
           <svg
             viewBox="0 0 48 48"

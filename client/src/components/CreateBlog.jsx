@@ -2,7 +2,7 @@ import React from "react";
 
 function CreateBlog() {
   return (
-    <div className="px-40 flex flex-1 justify-center py-5">
+    <div className="px-40 flex flex-1 justify-center py-5 max-h-screen overflow-y-scroll">
       <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
         <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
           <label className="flex flex-col min-w-40 flex-1">
@@ -46,17 +46,8 @@ function CreateBlog() {
             />
           </label>
         </div>
-        <h3 className="text-[#141414] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
-          Preview
-        </h3>
-        <p className="text-[#141414] text-base font-normal leading-normal pb-3 pt-1 px-4">
-          This is where the markdown preview will appear.
-        </p>
-        <p className="text-neutral-500 text-sm font-normal leading-normal pb-3 pt-1 px-4">
-          Draft saved 2 minutes ago
-        </p>
-        <div className="flex px-4 py-3 justify-end">
-          <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-black text-neutral-50 text-sm font-bold leading-normal tracking-[0.015em]">
+        <div className="flex px-4 py-3 justify-start">
+          <button className="flex  min-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-black text-neutral-50 text-sm font-bold leading-normal tracking-[0.015em]">
             <span className="truncate">Publish</span>
           </button>
         </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import ButtonOne from "../components/buttons/ButtonOne";
 
 function Landing() {
   return (

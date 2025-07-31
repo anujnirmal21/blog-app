@@ -5,14 +5,26 @@ import BlogDetails from "./pages/BlogDetails";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUP from "./pages/SignUP";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Landing from "./pages/Landing";
+
+const authUser = true;
 
 function App() {
   return (
     <div>
-      <SignUP />
-      {/* <Login /> */}
-      {/* <Home /> */}
-      {/* <BlogDetails /> */}
+      <NavBar />
+      <Routes>
+        <Route path="/" element={!authUser && <Landing />} />
+        <Route
+          path="/home"
+          element={authUser ? <Home /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/:id"
+          element={authUser ? <BlogDetails /> : <Navigate to="/login" />}
+        />
+      </Routes>
     </div>
   );
 }

@@ -4,7 +4,6 @@ import NavBar from "../components/NavBar";
 function BlogDetails() {
   return (
     <>
-      <NavBar />
       <div className="px-40 flex flex-1 justify-center py-5">
         <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
           <h1 className="text-[#141414] tracking-light text-[32px] font-bold leading-tight px-4 text-left pb-3 pt-6">
