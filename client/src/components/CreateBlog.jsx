@@ -37,15 +37,15 @@ function CreateBlog() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="px-40 flex flex-1 justify-center py-5 max-h-screen overflow-y-scroll"
+      className="lg:px-40 flex flex-1 justify-center py-5 max-h-screen overflow-y-scroll"
     >
       <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
         <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-          <label className="flex flex-col min-w-40 flex-1">
+          <label className="flex flex-col lg:min-w-40 flex-1">
             <input
               placeholder="Title"
               {...register("title", { required: "Title is required" })}
-              className="form-input w-full rounded-xl border border-[#dbdbdb] bg-neutral-50 h-14 p-[15px] text-base placeholder:text-neutral-500 focus:outline-0 focus:border-black"
+              className="form-input lg:w-full rounded-xl border border-[#dbdbdb] bg-neutral-50 h-14 p-[15px] text-base placeholder:text-neutral-500 focus:outline-0 focus:border-black"
             />
             {errors.title && (
               <span className="text-red-500 text-sm mt-1">
@@ -126,7 +126,7 @@ function CreateBlog() {
         <div className="flex px-4 py-3 justify-start">
           <button
             type="submit"
-            className="min-w-[480px] h-10 px-4 bg-black text-white rounded-xl font-bold text-sm flex items-center justify-center"
+            className="w-[200px] lg:min-w-[480px] h-10 px-4 bg-black text-white rounded-xl font-bold text-sm flex items-center justify-center"
           >
             {isUploading ? <LoaderIcon /> : "Publish"}
           </button>

@@ -5,6 +5,7 @@ import { useSideBarStore } from "../store/useSideBarStore";
 import UserBlogs from "../components/UserBlogs";
 import UpdateBlog from "./../components/UpdateBlog";
 import { useBlogStore } from "../store/useBlogStore";
+import Profile from "../components/Profile";
 
 function Home() {
   const { sideBarState } = useSideBarStore();
@@ -17,6 +18,7 @@ function Home() {
       {sideBarState === "Create" && <CreateBlog />}
       {sideBarState === "My Blogs" && <UserBlogs />}
       {sideBarState === "Update" && <UpdateBlog blog={blog} />}
+      {sideBarState === "Profile" && <Profile />}
     </div>
   );
 }

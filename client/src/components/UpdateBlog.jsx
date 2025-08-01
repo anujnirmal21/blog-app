@@ -58,12 +58,12 @@ function UpdateBlog({ blog }) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="px-40 flex flex-1 justify-center py-5 max-h-screen overflow-y-scroll"
+      className=" lg:px-40 flex flex-1 justify-center py-5 max-h-screen overflow-y-scroll"
     >
       <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
         {/* Title Input */}
         <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-          <label className="flex flex-col min-w-40 flex-1">
+          <label className="flex flex-col lg:min-w-40 flex-1">
             <input
               placeholder="Title"
               {...register("title", { required: "Title is required" })}
@@ -138,7 +138,7 @@ function UpdateBlog({ blog }) {
         <div className="flex px-4 py-3 justify-start">
           <button
             type="submit"
-            className="min-w-[480px] h-10 px-4 bg-black text-white rounded-xl font-bold text-sm flex items-center justify-center"
+            className="w-[200px] lg:min-w-[480px] h-10 px-4 bg-black text-white rounded-xl font-bold text-sm flex items-center justify-center"
           >
             {isUpdating ? <LoaderIcon /> : "Update"}
           </button>

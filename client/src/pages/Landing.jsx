@@ -1,5 +1,6 @@
 import React from "react";
 import ButtonOne from "../components/buttons/ButtonOne";
+import { Link } from "react-router-dom";
 
 function Landing() {
   return (
@@ -21,7 +22,9 @@ function Landing() {
               Stay curious.
             </h2>
           </div>
-          <ButtonOne text={"Start reading"} />
+          <Link to={"/login"}>
+            <ButtonOne text={"Start reading"} />
+          </Link>
         </div>
       </div>
     </div>
