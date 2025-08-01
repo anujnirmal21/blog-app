@@ -35,7 +35,7 @@ const handleSignUp = async (req, res) => {
 
       res.status(201).json({
         _id: newUser._id,
-        fullName: newUser.fullName,
+        fullName: newUser.fullname,
         email: newUser.email,
         profilePic: newUser.profilePic,
       });
@@ -86,4 +86,14 @@ const handleLogout = async (req, res) => {
   }
 };
 
-export { handleLogin, handleLogout, handleSignUp };
+const handleCheckAuth = (req, res) => {
+  try {
+    // console.log(req.user);
+    res.status(200).json(req.user);
+  } catch (error) {
+    console.log("Error in checkAuth controller", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export { handleLogin, handleLogout, handleSignUp, handleCheckAuth };
