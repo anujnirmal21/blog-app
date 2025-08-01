@@ -1,16 +1,22 @@
 import { getFetcher } from "../api/fetcher.js";
-import BlogCard from "./cards/BlogCard";
 import Pagenation from "./Pagenation.jsx";
 import useSWR from "swr";
 import { Loader2 } from "lucide-react";
-function Explore() {
-  const { data: allBlogs, error, isLoading } = useSWR("/blog/", getFetcher);
+import UserBlogCard from "./cards/UserBlogCard.jsx";
+import { useBlogStore } from "../store/useBlogStore.js";
+
+function UserBlogs() {
+  const {
+    data: allBlogs,
+    error,
+    isLoading,
+  } = useSWR("/blog/user-blogs", getFetcher);
 
   return (
     <div className="layout-content-container flex flex-col max-w-[960px] flex-1 overflow-y-hidden max-h-screen">
       <div className="flex flex-wrap justify-between gap-3 p-4">
         <p className="text-[#141414] tracking-light text-[32px] font-bold leading-tight min-w-72">
-          Explore
+          Your Blogs
         </p>
       </div>
       <div className="px-4 py-3">
@@ -48,7 +54,7 @@ function Explore() {
           </div>
         )}
         {allBlogs?.map((blog) => (
-          <BlogCard blog={blog} key={blog._id} />
+          <UserBlogCard blog={blog} key={blog._id} />
         ))}
       </div>
       <Pagenation />
@@ -56,4 +62,4 @@ function Explore() {
   );
 }
 
-export default Explore;
+export default UserBlogs;

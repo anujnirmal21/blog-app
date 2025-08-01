@@ -1,36 +1,57 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CircleX } from "lucide-react";
 import { useBlogStore } from "../store/useBlogStore";
 import { LoaderIcon } from "react-hot-toast";
+import toast from "react-hot-toast";
 
-function CreateBlog() {
+function UpdateBlog({ blog }) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-    reset,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      title: blog.title,
+      content: blog.content,
+    },
+  });
 
-  const [imagePreview, setImagePreview] = useState(null);
-  const { handleCreateBlog, isUploading } = useBlogStore();
+  const [imagePreview, setImagePreview] = useState(blog.image || null);
+  const { handleUpdate, isUpdating } = useBlogStore();
+
+  useEffect(() => {
+    setValue("title", blog.title);
+    setValue("content", blog.content);
+  }, [blog, setValue]);
 
   const onSubmit = async (data) => {
-    await handleCreateBlog({ ...data, image: imagePreview });
-    setImagePreview(null);
-    reset();
+    const payload = {
+      title: data.title !== blog.title ? data.title : undefined,
+      content: data.content !== blog.content ? data.content : undefined,
+      image: imagePreview !== blog.image ? imagePreview : undefined,
+    };
+
+    const hasChanges = Object.values(payload).some((val) => val !== undefined);
+
+    if (!hasChanges) {
+      toast.error("No changes made.");
+      return;
+    }
+
+    await handleUpdate(blog._id, payload);
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (!file.type.startsWith("image/")) {
+    if (!file || !file.type.startsWith("image/")) {
       toast.error("Please select an image file");
       return;
     }
+
     const reader = new FileReader();
-    reader.onloadend = () => {
-      setImagePreview(reader.result);
-    };
+    reader.onloadend = () => setImagePreview(reader.result);
     reader.readAsDataURL(file);
   };
 
@@ -40,6 +61,7 @@ function CreateBlog() {
       className="px-40 flex flex-1 justify-center py-5 max-h-screen overflow-y-scroll"
     >
       <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
+        {/* Title Input */}
         <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
           <label className="flex flex-col min-w-40 flex-1">
             <input
@@ -55,51 +77,39 @@ function CreateBlog() {
           </label>
         </div>
 
+        {/* Image Upload */}
         <div className="flex flex-col p-4">
           <div className="flex flex-col items-center gap-6 rounded-xl border-2 border-dashed border-[#dbdbdb] px-6 py-14 relative">
             {!imagePreview && (
               <>
-                <div className="flex flex-col items-center gap-2">
-                  <p className="text-[#141414] text-lg font-bold text-center">
-                    Upload Image
-                  </p>
-                  <p className="text-[#141414] text-sm font-normal text-center">
-                    Drag and drop or click to upload
-                  </p>
+                <div className="text-center">
+                  <p className="text-lg font-bold">Upload Image</p>
+                  <p className="text-sm">Drag and drop or click to upload</p>
                 </div>
                 <input
                   type="file"
                   accept="image/*"
-                  {...register("image", { required: "Image is required" })}
-                  onChange={(e) => {
-                    register("image").onChange(e);
-                    handleImageChange(e);
-                  }}
-                  className="hidden"
                   id="fileUpload"
+                  onChange={handleImageChange}
+                  className="hidden"
                 />
                 <label
                   htmlFor="fileUpload"
-                  className="cursor-pointer flex items-center justify-center h-10 px-4 rounded-xl bg-[#ededed] text-sm font-bold"
+                  className="cursor-pointer h-10 px-4 rounded-xl bg-[#ededed] text-sm font-bold flex items-center justify-center"
                 >
                   Upload
                 </label>
-                {errors.image && (
-                  <span className="text-red-500 text-sm">
-                    {errors.image.message}
-                  </span>
-                )}
               </>
             )}
             {imagePreview && (
-              <div className=" relative">
+              <div className="relative">
                 <img
                   src={imagePreview}
                   alt="Preview"
                   className="rounded-lg h-[80%] w-full object-cover mt-4"
                 />
                 <CircleX
-                  className=" absolute right-4 top-8 text-white bg-black rounded-full cursor-pointer"
+                  className="absolute right-4 top-8 text-white bg-black rounded-full cursor-pointer"
                   onClick={() => setImagePreview(null)}
                   size={30}
                 />
@@ -108,6 +118,7 @@ function CreateBlog() {
           </div>
         </div>
 
+        {/* Content Input */}
         <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
           <label className="flex flex-col min-w-40 flex-1">
             <textarea
@@ -123,12 +134,13 @@ function CreateBlog() {
           </label>
         </div>
 
+        {/* Submit */}
         <div className="flex px-4 py-3 justify-start">
           <button
             type="submit"
             className="min-w-[480px] h-10 px-4 bg-black text-white rounded-xl font-bold text-sm flex items-center justify-center"
           >
-            {isUploading ? <LoaderIcon /> : "Publish"}
+            {isUpdating ? <LoaderIcon /> : "Update"}
           </button>
         </div>
       </div>
@@ -136,4 +148,4 @@ function CreateBlog() {
   );
 }
 
-export default CreateBlog;
+export default UpdateBlog;
