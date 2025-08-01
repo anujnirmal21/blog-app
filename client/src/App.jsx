@@ -20,7 +20,10 @@ function App() {
     <div>
       <NavBar />
       <Routes>
-        <Route path="/" element={!authUser && <Landing />} />
+        <Route
+          path="/"
+          element={authUser ? <Navigate to="/home" replace /> : <Landing />}
+        />
         <Route
           path="/signup"
           element={!authUser ? <SignUp /> : <Navigate to="/home" />}

@@ -32,7 +32,7 @@ const getBlog = async (req, res) => {
 const handleCreateBlog = async (req, res) => {
   const { title, content, image } = req.body;
   const { _id: userId } = req.user;
-
+  console.log(image[0]);
   try {
     if (!title || !content) {
       return res
@@ -56,6 +56,7 @@ const handleCreateBlog = async (req, res) => {
     const savedBlog = await newBlog.save();
     res.status(201).json(savedBlog);
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ message: "Failed to create blog", error: error.message });
