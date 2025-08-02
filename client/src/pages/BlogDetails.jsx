@@ -26,7 +26,7 @@ function BlogDetails() {
     <>
       <div className=" px-2 lg:px-40 flex flex-1 justify-center py-5">
         <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
-          <h1 className="text-[#141414] tracking-light text-[32px] font-bold leading-tight px-4 text-left pb-3 pt-6 relative">
+          <h1 className="text-[#141414] tracking-light text-3xl lg:text-[32px] font-bold leading-tight px-4 text-left pb-3 pt-6 relative">
             <ArrowLeft
               size={40}
               className=" absolute -left-1 lg:-left-10 -top-4 cursor-pointer"
@@ -52,7 +52,7 @@ function BlogDetails() {
             </div>
           </div>
           <div className="flex w-full grow bg-neutral-50 @container py-3">
-            <div className="w-full gap-1 overflow-hidden bg-neutral-50 @[480px]:gap-2 aspect-[3/2] flex">
+            <div className="w-full gap-1 overflow-hidden bg-neutral-50 @[480px]:gap-2 aspect-[3/4] lg:aspect-[4/3] flex">
               <div
                 className="w-full bg-center bg-no-repeat bg-cover aspect-auto rounded-lg flex-1"
                 style={{
@@ -61,7 +61,7 @@ function BlogDetails() {
               />
             </div>
           </div>
-          <p className="text-[#141414] text-base font-normal leading-normal pb-3 pt-1 px-4">
+          <p className="text-[#141414] text-base font-normal text-justify leading-normal pb-3 pt-1 px-4">
             {blog.content}
           </p>
         </div>

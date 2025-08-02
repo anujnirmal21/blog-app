@@ -9,6 +9,16 @@ function UserBlogCard({ blog }) {
   const { handleDelete, setBlog } = useBlogStore();
   const { setSideBarState } = useSideBarStore();
   const [deleteBlog, setDeleteBlog] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const MAX_LENGTH = 300;
+  const isLong = blog.content.length > MAX_LENGTH;
+  const preview = blog.content.slice(0, MAX_LENGTH);
+
+  const handleExpanded = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setExpanded((prv) => !prv);
+  };
 
   const handleBlogDelete = async (e) => {
     e.preventDefault();
@@ -43,10 +53,17 @@ function UserBlogCard({ blog }) {
           <p className="text-[#141414] text-lg font-bold leading-tight tracking-[-0.015em]">
             {blog.title}
           </p>
-          <div className="flex items-end gap-3 justify-between">
-            <p className="text-neutral-500 text-base font-normal leading-normal">
-              {blog.content}
-            </p>
+          <div className="flex flex-col gap-2 text-neutral-500 text-base font-normal leading-normal text-justify">
+            <p>{expanded || !isLong ? blog.content : `${preview}...`}</p>
+
+            {isLong && (
+              <button
+                onClick={handleExpanded}
+                className="text-blue-600 hover:underline self-start"
+              >
+                {expanded ? "Read Less" : "Read More"}
+              </button>
+            )}
           </div>
         </div>
         <div className=" flex gap-2.5">

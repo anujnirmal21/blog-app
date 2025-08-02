@@ -13,7 +13,7 @@ function Explore() {
   const filteredBlogs = useMemo(
     () =>
       allBlogs?.filter((blog) =>
-        blog.title.toLowerCase().includes(searchTerm.toLowerCase())
+        blog.title.toLowerCase().startsWith(searchTerm.toLowerCase())
       ),
     [searchTerm, setSearchTerm, allBlogs]
   );
@@ -33,6 +33,13 @@ function Explore() {
         {isLoading && (
           <div className=" h-full w-full flex justify-center items-center">
             <Loader2 className=" animate-spin" />
+          </div>
+        )}
+        {filteredBlogs?.length === 0 && (
+          <div className=" h-full w-full flex justify-center items-center">
+            <p className=" text-lg text-gray-400">
+              No blogs to show right now.
+            </p>
           </div>
         )}
         {filteredBlogs?.map((blog) => (

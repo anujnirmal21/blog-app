@@ -18,7 +18,7 @@ function UserBlogs() {
   const filteredBlogs = useMemo(
     () =>
       allBlogs?.filter((blog) =>
-        blog.title.toLowerCase().includes(searchTerm.toLowerCase())
+        blog.title.toLowerCase().startsWith(searchTerm.toLowerCase())
       ),
     [searchTerm, setSearchTerm, allBlogs]
   );
@@ -35,6 +35,11 @@ function UserBlogs() {
       </div>
       <div className=" overflow-x-hidden overflow-y-scroll h-full">
         {error && <p>Error loading blogs.</p>}
+        {filteredBlogs?.length === 0 && (
+          <div className=" h-full w-full flex justify-center items-center">
+            <p className=" text-lg text-gray-400">Write some exciting blogs.</p>
+          </div>
+        )}
         {isLoading && (
           <div className=" h-full w-full flex justify-center items-center">
             <Loader2 className=" animate-spin" />

@@ -1,4 +1,3 @@
-import React from "react";
 import { useSideBarStore } from "../store/useSideBarStore";
 import { X } from "lucide-react";
 
@@ -83,14 +82,29 @@ function SideBar() {
         } md:translate-x-0`}
       >
         <X
-          className=" absolute right-4 top-4"
+          className=" absolute right-4 top-4 lg:hidden"
           onClick={() => toggleSidebar()}
         />
         <div className="flex h-full min-h-[700px] flex-col justify-between bg-neutral-50 p-4">
           <div className="flex flex-col gap-4">
-            <h1 className="text-[#141414] text-base font-medium leading-normal">
-              Bloggr
-            </h1>
+            <div className=" lg:hidden flex gap-2 items-center">
+              <div className="size-4">
+                <svg
+                  viewBox="0 0 48 48"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 6H42L36 24L42 42H6L12 24L6 6Z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </div>
+              <h1 className="text-[#141414] text-lg font-medium leading-normal">
+                Bloggr
+              </h1>
+            </div>
+
             <div className="flex flex-col gap-2">
               {routes.map((route) => (
                 <div
