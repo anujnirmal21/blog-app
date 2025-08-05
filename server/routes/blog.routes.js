@@ -7,6 +7,8 @@ import {
   handleUpdateBlog,
   getUserBlogs,
   getBlog,
+  handleLikeBlog,
+  handleCommenteBlog,
 } from "../controllers/blog.controller.js";
 
 const blogRoutes = Router();
@@ -16,6 +18,8 @@ blogRoutes.get("/", protectRoute, getAllBlogs);
 blogRoutes.get("/:id", protectRoute, getBlog);
 
 blogRoutes.post("/", protectRoute, handleCreateBlog);
+blogRoutes.post("/like/:id", protectRoute, handleLikeBlog);
+blogRoutes.post("/comment/:id", protectRoute, handleCommenteBlog);
 blogRoutes.put("/:id", protectRoute, handleUpdateBlog);
 blogRoutes.delete("/:id", protectRoute, handleDeleteBlog);
 
