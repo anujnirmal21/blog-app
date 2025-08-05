@@ -16,14 +16,17 @@ function Login() {
   };
 
   return (
-    <div className="px-40 flex flex-1 justify-center py-5">
+    <div className=" px-2 lg:px-40 flex flex-1 justify-center py-5">
       <div className="justify-center flex flex-col py-5 w-full flex-1">
         <h2 className="text-[#141414] tracking-light text-[28px] font-bold leading-tight px-4 text-center pb-3 pt-5">
           Welcome back.
         </h2>
 
-        <form onSubmit={handleSubmit(onSubmit)} className=" mx-auto w-[480px]">
-          <div className="mx-auto flex min-w-[480px] flex-wrap items-center gap-4 px-4 py-3">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className=" lg:mx-auto lg:w-[480px]"
+        >
+          <div className="mx-auto flex min-w-[350px] lg:min-w-[480px] flex-wrap items-center gap-4 px-4 py-3">
             <label className="flex flex-col min-w-40 flex-1">
               <p className="text-[#141414] text-base font-medium leading-normal pb-2">
                 Email
@@ -47,7 +50,7 @@ function Login() {
             </label>
           </div>
 
-          <div className="flex mx-auto min-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+          <div className="flex mx-auto  min-w-[350px] lg:min-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
             <label className="flex flex-col min-w-40 flex-1">
               <p className="text-[#141414] text-base font-medium leading-normal pb-2">
                 Password
@@ -72,11 +75,11 @@ function Login() {
             </label>
           </div>
 
-          <div className="flex px-4 py-3 mx-auto">
+          <div className="flex lg:px-4 py-3 mx-auto ">
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex min-w-[450px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-black text-neutral-50 text-sm font-bold leading-normal tracking-[0.015em] disabled:opacity-60"
+              className="flex  min-w-[320px] lg:min-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-black text-neutral-50 text-sm font-bold leading-normal tracking-[0.015em] disabled:opacity-60"
             >
               <span className="truncate text-base">
                 {isLoggingIn ? <LoaderIcon /> : "Log in"}

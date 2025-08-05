@@ -1,5 +1,5 @@
-import React from "react";
 import { useSideBarStore } from "../store/useSideBarStore";
+import { X } from "lucide-react";
 
 const routes = [
   { name: "Home", icon: "House" },
@@ -7,7 +7,6 @@ const routes = [
   { name: "My Blogs", icon: "Note" },
   { name: "Profile", icon: "User" },
 ];
-
 const icons = {
   House: (
     <svg
@@ -56,54 +55,97 @@ const icons = {
 };
 
 function SideBar() {
-  const { sideBarState, setSideBarState } = useSideBarStore();
+  const { sideBarState, setSideBarState, isSidebarOpen, toggleSidebar } =
+    useSideBarStore();
 
   return (
-    <div className="layout-content-container flex flex-col w-80">
-      <div className="flex h-full min-h-[700px] flex-col justify-between bg-neutral-50 p-4">
-        <div className="flex flex-col gap-4">
-          <h1 className="text-[#141414] text-base font-medium leading-normal">
-            Bloggr
-          </h1>
-          <div className="flex flex-col gap-2">
-            {routes.map((route) => (
-              <div
-                key={route.name}
-                onClick={() => setSideBarState(route.name)}
-                className={`flex items-center gap-3 px-3 py-2 rounded-xl cursor-pointer ${
-                  sideBarState === route.name ? "bg-[#ededed]" : ""
-                }`}
-              >
-                <div className="text-[#141414]">{icons[route.icon]}</div>
-                <p className="text-[#141414] text-sm font-medium leading-normal">
-                  {route.name}
-                </p>
+    <>
+      {/* Hamburger Menu (only visible on small screens) */}
+      <div className="md:hidden p-4">
+        <button onClick={toggleSidebar}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            fill="currentColor"
+            viewBox="0 0 256 256"
+          >
+            <path d="M40,128a8,8,0,0,1,8-8H208a8,8,0,0,1,0,16H48A8,8,0,0,1,40,128Zm0-48a8,8,0,0,1,8-8H208a8,8,0,0,1,0,16H48A8,8,0,0,1,40,80Zm8,88H208a8,8,0,0,1,0,16H48a8,8,0,0,1,0-16Z" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Sidebar (visible on desktop and when open on mobile) */}
+      <div
+        className={`  layout-content-container flex flex-col w-80 z-50 bg-white transition-transform duration-300 fixed md:static top-0 left-0 h-full shadow-md ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0`}
+      >
+        <X
+          className=" absolute right-4 top-4 lg:hidden"
+          onClick={() => toggleSidebar()}
+        />
+        <div className="flex h-full min-h-[700px] flex-col justify-between bg-neutral-50 p-4">
+          <div className="flex flex-col gap-4">
+            <div className=" lg:hidden flex gap-2 items-center">
+              <div className="size-4">
+                <svg
+                  viewBox="0 0 48 48"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 6H42L36 24L42 42H6L12 24L6 6Z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
               </div>
-            ))}
-          </div>
-        </div>
-        {/* You can keep the Settings section as is */}
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-3 px-3 py-2">
-            <div className="text-[#141414]">
-              {/* Gear Icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24px"
-                height="24px"
-                fill="currentColor"
-                viewBox="0 0 256 256"
-              >
-                <path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm88-29.84..." />
-              </svg>
+              <h1 className="text-[#141414] text-lg font-medium leading-normal">
+                Bloggr
+              </h1>
             </div>
-            <p className="text-[#141414] text-sm font-medium leading-normal">
-              Settings
-            </p>
+
+            <div className="flex flex-col gap-2">
+              {routes.map((route) => (
+                <div
+                  key={route.name}
+                  onClick={() => {
+                    setSideBarState(route.name);
+                    toggleSidebar();
+                  }}
+                  className={`flex items-center gap-3 px-3 py-2 rounded-xl cursor-pointer ${
+                    sideBarState === route.name ? "bg-[#ededed]" : ""
+                  }`}
+                >
+                  <div className="text-[#141414]">{icons[route.icon]}</div>
+                  <p className="text-[#141414] text-sm font-medium leading-normal">
+                    {route.name}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-3 px-3 py-2">
+              <div className="text-[#141414]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24px"
+                  height="24px"
+                  fill="currentColor"
+                  viewBox="0 0 256 256"
+                >
+                  <path d="M128,80a48,48,0,1,0,48,48..." />
+                </svg>
+              </div>
+              <p className="text-[#141414] text-sm font-medium leading-normal">
+                Settings
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

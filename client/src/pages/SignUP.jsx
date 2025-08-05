@@ -16,18 +16,21 @@ function SignUp() {
   };
 
   return (
-    <div className="px-40 flex flex-1 justify-center py-5">
+    <div className="px-2 lg:px-40 flex flex-1 justify-center py-5">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="layout-content-container flex flex-col w-[512px] py-5 max-w-[960px] flex-1"
+        className="layout-content-container flex flex-col lg:mx-auto lg:w-[480px] flex-1"
       >
         <h2 className="text-[#141414] tracking-light text-[28px] font-bold leading-tight px-4 text-center pb-3 pt-5">
           Join Bloggr
         </h2>
 
         {/* Name */}
-        <div className="flex mx-auto min-w-[480px] flex-wrap items-end gap-2 px-4 py-2">
+        <div className="flex mx-auto min-w-[350px] lg:min-w-[480px] flex-wrap items-end gap-2 px-4 py-2">
           <label className="flex flex-col min-w-40 flex-1">
+            <p className="text-[#141414] text-base font-medium leading-normal pb-2">
+              Full name
+            </p>
             <input
               {...register("fullName", { required: "Full name is required" })}
               placeholder="Your name"
@@ -44,8 +47,11 @@ function SignUp() {
         </div>
 
         {/* Email */}
-        <div className="flex mx-auto min-w-[480px] flex-wrap items-end gap-2 px-4 py-2">
+        <div className="flex mx-auto min-w-[350px] lg:min-w-[480px] flex-wrap items-end gap-2 px-4 py-2">
           <label className="flex flex-col min-w-40 flex-1">
+            <p className="text-[#141414] text-base font-medium leading-normal pb-2">
+              Email
+            </p>
             <input
               {...register("email", {
                 required: "Email is required",
@@ -69,8 +75,11 @@ function SignUp() {
         </div>
 
         {/* Password */}
-        <div className="flex min-w-[480px] mx-auto flex-wrap items-end gap-2 px-4 py-2">
+        <div className="flex min-w-[350px] lg:min-w-[480px] mx-auto flex-wrap items-end gap-2 px-4 py-2">
           <label className="flex flex-col min-w-40 flex-1">
+            <p className="text-[#141414] text-base font-medium leading-normal pb-2">
+              Password
+            </p>
             <input
               {...register("password", {
                 required: "Password is required",
@@ -94,10 +103,10 @@ function SignUp() {
         </div>
 
         {/* Submit Button */}
-        <div className="flex px-4 py-3 mx-auto">
+        <div className="flex lg:px-4 py-3 mx-auto">
           <button
             type="submit"
-            className="flex min-w-[450px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-black text-neutral-50 text-sm font-bold leading-normal tracking-[0.015em]"
+            className="flex min-w-[320px] lg:min-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-black text-neutral-50 text-sm font-bold leading-normal tracking-[0.015em]"
           >
             <span className="truncate">
               {!isSigningUp ? (
