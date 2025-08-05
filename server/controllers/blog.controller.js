@@ -12,6 +12,20 @@ const getAllBlogs = async (req, res) => {
       .json({ message: "Failed to fetch blogs", error: error.message });
   }
 };
+const getUserBlogs = async (req, res) => {
+  const { _id: userId } = req.user;
+  // console.log("called");
+  try {
+    //sort by time of creation
+    const allBlogs = await Blog.find({ userId }).sort({ createdAt: -1 });
+    res.status(200).json(allBlogs);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ message: "Failed to fetch blogs", error: error.message });
+  }
+};
 
 const getBlog = async (req, res) => {
   const { id } = req.params;
@@ -69,13 +83,13 @@ const handleUpdateBlog = async (req, res) => {
   const { _id: userId } = req.user;
 
   try {
+    const blog = await Blog.findById(id);
     if (blog.userId.toString() !== userId.toString()) {
       return res
         .status(403)
         .json({ message: "Unauthorized to perform this action" });
     }
 
-    const blog = await Blog.findById(id);
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
@@ -152,7 +166,7 @@ const handleLikeBlog = async (req, res) => {
       return res.status(200).json({ message: "Blog liked successfully" });
     }
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: "Failed to toggle like",
       error: error.message,
     });
@@ -162,17 +176,27 @@ const handleLikeBlog = async (req, res) => {
 const handleCommenteBlog = async (req, res) => {
   const { id } = req.params;
   const { _id: userId } = req.user;
+  const { text } = req.body;
   try {
-    const blog = await Blog.findByIdAndDelete(id);
+    const blog = await Blog.findById(id);
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
+    if (!text || text.trim() === "") {
+      return res.status(400).json({ message: "Comment cannot be empty" });
+    }
 
-    res.status(200).json({ message: "Blog deleted successfully" });
+    blog.comments.push({ userId, text });
+    await blog.save();
+    return res.status(200).json({
+      message: "Comment added successfully",
+      comment: { userId, text },
+      blog,
+    });
   } catch (error) {
-    res
+    return res
       .status(500)
-      .json({ message: "Failed to delete blog", error: error.message });
+      .json({ message: "Failed to comment blog", error: error.message });
   }
 };
 
@@ -182,6 +206,7 @@ export {
   handleUpdateBlog,
   getAllBlogs,
   getBlog,
+  getUserBlogs,
   handleLikeBlog,
   handleCommenteBlog,
 };
