@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.routes.js";
 import blogRoutes from "./routes/blog.routes.js";
 
 const app = express();
+const CLIENT_URL = process.env.CLIENT_URL;
 
 //middlewares
 app.use(
@@ -19,7 +20,7 @@ app.use(
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://blog03.netlify.app",
+    origin: CLIENT_URL,
     credentials: true,
   })
 );
