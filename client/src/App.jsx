@@ -6,8 +6,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Landing from "./pages/Landing";
 import { useAuthStore } from "./store/useAuthStore";
 import { Toaster } from "react-hot-toast";
-import SignUp from "./pages/SignUp";
 import { useEffect } from "react";
+import SignUp from "./pages/SignUP";
 
 function App() {
   const { authUser, checkAuth } = useAuthStore();
