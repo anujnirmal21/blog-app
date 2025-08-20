@@ -16,7 +16,6 @@ const blogRoutes = Router();
 blogRoutes.get("/user-blogs", protectRoute, getUserBlogs);
 blogRoutes.get("/", protectRoute, getAllBlogs);
 blogRoutes.get("/:id", protectRoute, getBlog);
-
 blogRoutes.post("/", protectRoute, handleCreateBlog);
 blogRoutes.post("/like/:id", protectRoute, handleLikeBlog);
 blogRoutes.post("/comment/:id", protectRoute, handleCommenteBlog);

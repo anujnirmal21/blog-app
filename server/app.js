@@ -15,7 +15,7 @@ app.use(
     type: "application/json",
   })
 );
-app.use(express.urlencoded({ limit: "10mb", extended: true }));
+
 app.use(cookieParser());
 app.use(
   cors({

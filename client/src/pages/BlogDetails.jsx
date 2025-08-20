@@ -1,18 +1,52 @@
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { getFetcher } from "../api/fetcher";
 import { useNavigate, useParams } from "react-router-dom";
-import { Loader2, ArrowLeft } from "lucide-react";
+import { Loader2, ArrowLeft, Heart } from "lucide-react";
+import { useBlogStore } from "../store/useBlogStore";
+import { useState, useEffect } from "react";
+import { useAuthStore } from "./../store/useAuthStore";
 
 function BlogDetails() {
+  const { authUser } = useAuthStore();
+  const { handleLike } = useBlogStore();
   const { id } = useParams();
   const navigete = useNavigate();
   const { data: blog, error, isLoading } = useSWR(`/blog/${id}`, getFetcher);
-
+  const [liked, setLiked] = useState(false);
   const formattedDate = new Date(blog?.createdAt).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
+
+  useEffect(() => {
+    if (blog && blog.likes && authUser) {
+      setLiked(blog.likes.includes(authUser._id));
+    }
+  }, [blog, authUser]);
+
+  const handleClick = async (blogId) => {
+    await handleLike(blogId);
+    setLiked(!liked);
+
+    mutate(
+      `/blog/${blogId}`,
+      (prevBlog) => {
+        if (!prevBlog || !authUser) return prevBlog;
+
+        const hasLiked = prevBlog.likes.includes(authUser._id);
+        const updatedLikes = hasLiked
+          ? prevBlog.likes.filter((id) => id !== authUser._id)
+          : [...prevBlog.likes, authUser._id];
+
+        return {
+          ...prevBlog,
+          likes: updatedLikes,
+        };
+      },
+      false
+    );
+  };
 
   if (error) return <p>Error loading blogs.</p>;
   if (isLoading)
@@ -51,7 +85,7 @@ function BlogDetails() {
               </p>
             </div>
           </div>
-          <div className="flex w-full grow bg-neutral-50 @container py-3">
+          <div className="flex flex-col w-full grow bg-neutral-50 @container py-3">
             <div className="w-full gap-1 overflow-hidden bg-neutral-50 @[480px]:gap-2 aspect-[3/4] lg:aspect-[4/3] flex">
               <div
                 className="w-full bg-center bg-no-repeat bg-cover aspect-auto rounded-lg flex-1"
@@ -59,6 +93,33 @@ function BlogDetails() {
                   backgroundImage: `url(${blog.image})`,
                 }}
               />
+            </div>
+            <div className=" flex justify-between gap-2 my-4 mx-2 items-center w-full">
+              <div className=" flex items-center gap-2">
+                <Heart
+                  size={30}
+                  style={{
+                    stroke: liked ? "red" : "gray",
+                    fill: liked ? "red" : "transparent",
+                  }}
+                  className="cursor-pointer"
+                  onClick={() => handleClick(blog._id)}
+                />
+                <span className=" text-2xl">
+                  {" "}
+                  {blog?.likes.length ? blog?.likes.length : 0}
+                </span>
+              </div>
+              <div className=" flex  gap-2 w-full justify-end">
+                <input
+                  className=" border-black border rounded-md p-2 w-[80%]"
+                  type="text"
+                  placeholder=" write a comment..."
+                />
+                <button className=" p-2 bg-black text-white rounded-md cursor-pointer hover:scale-105">
+                  Comment
+                </button>
+              </div>
             </div>
           </div>
           <p className="text-[#141414] text-base font-normal text-justify leading-normal pb-3 pt-1 px-4">

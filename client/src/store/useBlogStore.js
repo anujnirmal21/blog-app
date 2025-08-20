@@ -40,6 +40,18 @@ export const useBlogStore = create((set, get) => {
         set({ isUpdating: false });
       }
     },
+    handleLike: async (blogId) => {
+      try {
+        await axiosInstance.post(`/blog/like/${blogId}`);
+      } catch (error) {
+        const errMsg =
+          error?.response?.data?.message ||
+          error?.message ||
+          "blog like failed";
+        console.log(errMsg);
+        toast.error(errMsg);
+      }
+    },
     handleDelete: async (blogId) => {
       try {
         await axiosInstance.delete(`/blog/${blogId}`);
